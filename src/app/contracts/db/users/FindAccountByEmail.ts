@@ -7,6 +7,6 @@ export interface FindAccountByEmailRepository {
 }
 
 export namespace FindAccountByEmailRepository {
-  export type Params = string;
   export type Response = Omit<User, 'password'> | null;
+  export type Params = string;
 }
