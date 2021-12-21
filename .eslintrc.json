@@ -21,6 +21,7 @@
     "prettier"
   ],
   "rules": {
+    "@typescript-eslint/no-empty-function":0,
     "no-restricted-syntax": "off",
     "camelcase": "off",
     "import/no-unresolved": "error",
