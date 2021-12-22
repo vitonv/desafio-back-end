@@ -9,7 +9,7 @@ import { PgConnection } from '../../helpers/connection';
 let connection: PgConnection;
 let sut: PgBranchesRepository;
 let pgBranchRepo: Repository<PgBranch>;
-describe('PgUsersRepository', () => {
+describe('PgBranchesRepository', () => {
   beforeAll(async () => {
     connection = PgConnection.getInstance();
     await connection.connect();

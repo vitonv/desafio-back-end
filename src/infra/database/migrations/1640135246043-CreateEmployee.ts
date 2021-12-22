@@ -1,13 +1,13 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateSubsidiary1640132593403 implements MigrationInterface {
+export class CreateEmployee1640135246043 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'branches',
+        name: 'employees',
         columns: [
           {
-            name: 'id_branch',
+            name: 'id',
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
@@ -16,7 +16,6 @@ export class CreateSubsidiary1640132593403 implements MigrationInterface {
           {
             name: 'name',
             type: 'varchar',
-            isUnique: true,
           },
           {
             name: 'created_at',
@@ -28,12 +27,27 @@ export class CreateSubsidiary1640132593403 implements MigrationInterface {
             type: 'timestamp',
             default: 'now()',
           },
+          {
+            name: 'id_branch',
+            type: 'uuid',
+            isNullable: true,
+          },
         ],
+        // foreignKeys: [
+        //   {
+        //     name: 'FKBranchEmployee',
+        //     referencedTableName: 'branches',
+        //     referencedColumnNames: ['id_branch'],
+        //     columnNames: ['id_branch'],
+        //     onDelete: 'SET NULL',
+        //     onUpdate: 'SET NULL',
+        //   },
+        // ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('branches');
+    await queryRunner.dropTable('employees');
   }
 }
