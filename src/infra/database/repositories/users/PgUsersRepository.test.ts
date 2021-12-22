@@ -16,7 +16,6 @@ describe('PgUsersRepository', () => {
     pgUserRepo = connection.getRepository(PgUser);
   });
   afterAll(async () => {
-    await pgUserRepo.delete('*');
     await connection.disconnect();
   });
   beforeEach(() => {
