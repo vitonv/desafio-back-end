@@ -6,6 +6,6 @@ PgConnection.getInstance()
   .then(async () => {
     const { app } = await import('./config/app');
     app.listen(5050, () => {
-      console.log('Server started at port 5050!');
+      console.log('Server started at http://localhost:5050/api/docs');
     });
   });
