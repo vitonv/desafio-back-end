@@ -28,21 +28,21 @@ export class CreateEmployee1640135246043 implements MigrationInterface {
             default: 'now()',
           },
           {
-            name: 'id_branch',
+            name: 'branch_id',
             type: 'uuid',
             isNullable: true,
           },
         ],
-        // foreignKeys: [
-        //   {
-        //     name: 'FKBranchEmployee',
-        //     referencedTableName: 'branches',
-        //     referencedColumnNames: ['id_branch'],
-        //     columnNames: ['id_branch'],
-        //     onDelete: 'SET NULL',
-        //     onUpdate: 'SET NULL',
-        //   },
-        // ],
+        foreignKeys: [
+          {
+            name: 'FKBranchEmployee',
+            referencedTableName: 'branches',
+            referencedColumnNames: ['id'],
+            columnNames: ['branch_id'],
+            onDelete: 'SET NULL',
+            onUpdate: 'SET NULL',
+          },
+        ],
       }),
     );
   }

@@ -28,19 +28,14 @@ describe('PgEmployeesRepository', () => {
 
   describe('create()', () => {
     it('Should create a new employee ', async () => {
+      const newBranch = await pgBranchRepo.save({
+        name: faker.company.companyName(),
+      });
       const employee = {
-        name: faker.internet.userName(),
+        name: faker.name.firstName(),
+        branch_id: newBranch.id,
       };
-      const branch = await pgBranchRepo.save({
-        name: faker.internet.domainName(),
-      });
-      await sut.create(employee.name, branch.id);
-      const findNewEmployee = await pgBranchRepo.findOne({
-        where: {
-          name: employee.name,
-        },
-      });
-      expect(findNewEmployee).toBeFalsy();
+      await sut.create(employee);
     });
   });
 });

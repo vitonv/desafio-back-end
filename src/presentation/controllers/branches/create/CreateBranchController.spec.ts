@@ -4,8 +4,8 @@ import { serverError } from '../../../helpers/http/HttpHelper';
 
 const makeCreateBranch = () => {
   class CreateBranchSpy implements CreateBranch {
-    async create(name: string): Promise<void> {
-      return Promise.resolve();
+    async create(name: string): Promise<boolean> {
+      return Promise.resolve(true);
     }
   }
   return new CreateBranchSpy();

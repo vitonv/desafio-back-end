@@ -1,5 +1,7 @@
 import { CreateBranchService } from '.';
+import { ListBranches } from '../../../../domain/useCases/branches/ListBranches';
 import { CreateBranchRepository } from '../../../contracts/db/branches/CreateBranch';
+import { ListBranchesRepository } from '../../../contracts/db/branches/ListBranches';
 
 const makeCreateBranchRepository = () => {
   class CreateBranchRepositorySpy implements CreateBranchRepository {
@@ -9,10 +11,22 @@ const makeCreateBranchRepository = () => {
   }
   return new CreateBranchRepositorySpy();
 };
+const makeListBranchRepository = () => {
+  class ListBranchRepositorySpy implements ListBranchesRepository {
+    async list(id?: string, name?: string): Promise<ListBranches.Result> {
+      return Promise.resolve([]);
+    }
+  }
+  return new ListBranchRepositorySpy();
+};
 const makeSut = () => {
+  const listBranchRepositorySpy = makeListBranchRepository();
   const createBranchRepositorySpy = makeCreateBranchRepository();
-  const sut = new CreateBranchService(createBranchRepositorySpy);
-  return { sut, createBranchRepositorySpy };
+  const sut = new CreateBranchService(
+    listBranchRepositorySpy,
+    createBranchRepositorySpy,
+  );
+  return { sut, createBranchRepositorySpy, listBranchRepositorySpy };
 };
 describe('CreateBranch Service', () => {
   it('Should call CreateBranchRepository with correct values', async () => {

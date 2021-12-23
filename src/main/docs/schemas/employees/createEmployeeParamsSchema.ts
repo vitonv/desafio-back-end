@@ -4,6 +4,9 @@ export const createEmployeeParamsSchema = {
     name: {
       type: 'string',
     },
+    branch_name: {
+      type: 'string',
+    },
   },
-  required: ['name'],
+  required: ['name', 'branch_id'],
 };

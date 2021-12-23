@@ -1,4 +1,6 @@
 import { UpdateBranchService } from '.';
+import { ListBranches } from '../../../../domain/useCases/branches/ListBranches';
+import { ListBranchesRepository } from '../../../contracts/db/branches/ListBranches';
 import { UpdateBranchRepository } from '../../../contracts/db/branches/UpdateBranch';
 
 const makeUpdateBranchRepository = () => {
@@ -9,10 +11,21 @@ const makeUpdateBranchRepository = () => {
   }
   return new UpdateBranchRepositorySpy();
 };
-
+const makeListBranchRepository = () => {
+  class ListBranchRepositorySpy implements ListBranchesRepository {
+    async list(id?: string, name?: string): Promise<ListBranches.Result> {
+      return Promise.resolve([]);
+    }
+  }
+  return new ListBranchRepositorySpy();
+};
 const makeSut = () => {
+  const listBranchesRepositorySpy = makeListBranchRepository();
   const updateBranchRepositorySpy = makeUpdateBranchRepository();
-  const sut = new UpdateBranchService(updateBranchRepositorySpy);
+  const sut = new UpdateBranchService(
+    listBranchesRepositorySpy,
+    updateBranchRepositorySpy,
+  );
   return {
     sut,
     updateBranchRepositorySpy,

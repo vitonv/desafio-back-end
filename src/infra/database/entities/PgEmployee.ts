@@ -11,20 +11,13 @@ import { v4 } from 'uuid';
 
 import { PgBranch } from './PgBranch';
 
-@Entity('employee')
+@Entity('employees')
 export class PgEmployee {
-  @PrimaryGeneratedColumn('uuid', { name: 'id_employee' })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   name: string;
-
-  @Column()
-  id_department: string;
-
-  // @ManyToOne(() => PgBranch)
-  // // @JoinColumn({ name: 'id_department' })
-  // department: PgBranch;
 
   @CreateDateColumn()
   created_at: Date;
@@ -32,12 +25,12 @@ export class PgEmployee {
   @UpdateDateColumn()
   updated_at: Date;
 
-  // @ManyToOne(() => PgBranch)
-  // @JoinColumn({ name: 'branch_id' })
-  // branch: PgBranch;
-
-  @Column()
+  @Column('uuid')
   branch_id: string;
+
+  @ManyToOne(() => PgBranch, branch => branch.id)
+  @JoinColumn({ name: 'branch_id' })
+  branch: PgBranch;
 
   constructor() {
     if (!this.id) {
