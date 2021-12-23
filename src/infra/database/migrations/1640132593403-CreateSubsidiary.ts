@@ -7,7 +7,7 @@ export class CreateSubsidiary1640132593403 implements MigrationInterface {
         name: 'branches',
         columns: [
           {
-            name: 'id_branch',
+            name: 'id',
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',

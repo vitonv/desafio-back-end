@@ -13,7 +13,7 @@ import { PgEmployee } from './PgEmployee';
 
 @Entity('branches')
 export class PgBranch {
-  @PrimaryGeneratedColumn('uuid', { name: 'id_branch' })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
