@@ -17,7 +17,6 @@ export class AuthenticationService implements Authentication {
     const account = await this.findAccountByEmailRepository.findByEmail(
       credentials.email,
     );
-    console.log(account);
     if (account) {
       const isValid = await this.hashComparer.compare(
         credentials.password,

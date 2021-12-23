@@ -12,7 +12,6 @@ export class CreateAccountService implements CreateAccount {
   async create(data: CreateAccount.Params): Promise<boolean> {
     const userExists = await this.findAccountRepository.findByEmail(data.email);
     if (!userExists) {
-      console.log(data);
       const hashedPassword = await this.hasher.hash(data.password);
       await this.createAccountRepository.create({
         name: data.name,
