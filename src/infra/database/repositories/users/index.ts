@@ -18,7 +18,7 @@ export class PgUsersRepository
     email: string,
   ): Promise<FindAccountByEmailRepository.Response> {
     const findUser = await this.repository.findOne({
-      select: ['id', 'name', 'email'],
+      select: ['id', 'name', 'email', 'password'],
       where: { email },
     });
     return findUser;

@@ -1,4 +1,5 @@
 import { CreateAccountService } from '.';
+import { Hasher } from '../../../contracts/cryptography/Hasher';
 import { CreateAccountRepository } from '../../../contracts/db/users/CreateAccount';
 import { FindAccountByEmailRepository } from '../../../contracts/db/users/FindAccountByEmail';
 
@@ -23,16 +24,28 @@ const makeCreateAccountRepository = () => {
   }
   return new CreateAccountRepositorySpy();
 };
+
+const makeHasher = () => {
+  class HasherSpy implements Hasher {
+    async hash(value: string): Promise<string> {
+      return Promise.resolve('hashed_password');
+    }
+  }
+  return new HasherSpy();
+};
 const makeSut = () => {
   const findAccountByEmailRepositorySpy = makeFindAccountByEmailRepository();
   const createAccountRepositorySpy = makeCreateAccountRepository();
+  const hasherSpy = makeHasher();
   const sut = new CreateAccountService(
     findAccountByEmailRepositorySpy,
+    hasherSpy,
     createAccountRepositorySpy,
   );
   return {
     sut,
     findAccountByEmailRepositorySpy,
+    hasherSpy,
     createAccountRepositorySpy,
   };
 };
@@ -68,16 +81,34 @@ describe('CreateAccount Service', () => {
           id: 'any_id',
           name: 'any_name',
           email: 'any_mail@mail.com',
+          password: 'any_password',
         }),
       );
     const response = await sut.create(makeFakeCreate);
     expect(response).toBe(false);
   });
+  it('Should create hasher with correct password', async () => {
+    const { sut, hasherSpy } = makeSut();
+    const hashSpy = jest.spyOn(hasherSpy, 'hash');
+    await sut.create(makeFakeCreate);
+    expect(hashSpy).toHaveBeenCalledWith('any_password');
+  });
+  it('Should throw if hasher throws', async () => {
+    const { sut, hasherSpy } = makeSut();
+    jest
+      .spyOn(hasherSpy, 'hash')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const error = sut.create(makeFakeCreate);
+    await expect(error).rejects.toThrow();
+  });
   it('Should call CreateAccountRepository with correct values', async () => {
     const { sut, createAccountRepositorySpy } = makeSut();
     const createSpy = jest.spyOn(createAccountRepositorySpy, 'create');
     await sut.create(makeFakeCreate);
-    expect(createSpy).toHaveBeenCalledWith(makeFakeCreate);
+    expect(createSpy).toHaveBeenCalledWith({
+      ...makeFakeCreate,
+      password: 'hashed_password',
+    });
   });
   it('Should throw if CreateAccountRepository throws', async () => {
     const { sut, createAccountRepositorySpy } = makeSut();
