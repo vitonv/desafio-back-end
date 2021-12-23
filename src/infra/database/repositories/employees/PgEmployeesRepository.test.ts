@@ -38,4 +38,19 @@ describe('PgEmployeesRepository', () => {
       await sut.create(employee);
     });
   });
+  describe('list()', () => {
+    type EmployeeData = {
+      id: string;
+      name: string;
+      branch: {
+        name: string;
+      };
+    };
+    it('Should return a list of employees', async () => {
+      const [employee] = await sut.list();
+      expect(employee).toHaveProperty('id');
+      expect(employee).toHaveProperty('name');
+      expect(employee).toHaveProperty('branch');
+    });
+  });
 });
