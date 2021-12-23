@@ -1,5 +1,5 @@
 export interface CreateBranch {
-  create(name: CreateBranch.Params): Promise<void>;
+  create(name: CreateBranch.Params): Promise<boolean>;
 }
 
 export namespace CreateBranch {

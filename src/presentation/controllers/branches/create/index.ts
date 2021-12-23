@@ -1,5 +1,9 @@
 import { CreateBranch } from '../../../../domain/useCases/branches/CreateBranch';
-import { created, serverError } from '../../../helpers/http/HttpHelper';
+import {
+  badRequest,
+  created,
+  serverError,
+} from '../../../helpers/http/HttpHelper';
 import { Controller, HttpRequest, HttpResponse } from '../../../protocols';
 
 export class CreateBranchController implements Controller {
@@ -7,7 +11,10 @@ export class CreateBranchController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { name } = httpRequest.body;
-      await this.createBranch.create(name);
+      const response = await this.createBranch.create(name);
+      if (!response) {
+        return badRequest(new Error('Name already exists'));
+      }
       return created(true);
     } catch (error) {
       return serverError(error);

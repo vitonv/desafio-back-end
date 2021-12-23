@@ -2,6 +2,6 @@ import { CreateBranchService } from '../../../../app/services/branches/createBra
 import { PgBranchesRepository } from '../../../../infra/database/repositories/branches';
 
 export const makeCreateBranch = () => {
-  const createBranchRepository = new PgBranchesRepository();
-  return new CreateBranchService(createBranchRepository);
+  const branchesRepository = new PgBranchesRepository();
+  return new CreateBranchService(branchesRepository, branchesRepository);
 };

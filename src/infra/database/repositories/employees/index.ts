@@ -14,6 +14,7 @@ export class PgEmployeesRepository {
   async create(name: string, branch_id?: string): Promise<any> {
     const employee = this.repository.create({ name });
     await this.repository.save(employee);
+    return employee;
   }
 
   // async update(id: string, name: string, branch_id: string): Promise<any> {
