@@ -20,6 +20,14 @@ export default {
       name: 'Users',
       description: 'API relacionada ao gerenciamento de usuários',
     },
+    {
+      name: 'Branches',
+      description: 'API relacionada ao gerenciamento de filiais',
+    },
+    {
+      name: 'Employees',
+      description: 'API relacionada ao gerenciamento de funcionários',
+    },
   ],
   paths,
   schemas,
