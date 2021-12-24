@@ -7,7 +7,8 @@ module.exports = {
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/infra/database/helpers/**',
     '!<rootDir>/src/infra/database/migrations/**',
-    '!<rootDir>/src/main/**'
+    '!<rootDir>/src/main/**',
+    '!**/protocols/**',
   ],
   coverageDirectory: 'coverage',
   preset: 'ts-jest',
