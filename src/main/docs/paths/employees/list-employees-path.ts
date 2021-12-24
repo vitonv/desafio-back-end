@@ -7,6 +7,17 @@ export const listEmployeePath = {
         apiKeyAuth: [],
       },
     ],
+    parameters: [
+      {
+        in: 'query',
+        name: 'id',
+        schema: {
+          type: 'string',
+        },
+        required: false,
+        description: 'Filter to find employee by ID',
+      },
+    ],
     responses: {
       200: {
         description: 'Success',

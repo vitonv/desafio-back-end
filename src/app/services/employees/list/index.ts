@@ -7,8 +7,8 @@ export class ListEmployeesService implements ListEmployees {
   constructor(
     private readonly listEmployeesRepository: ListEmployeesRepository,
   ) {}
-  async list(): Promise<Employee[]> {
-    const employees = await this.listEmployeesRepository.list();
+  async list(id?: string): Promise<Employee[]> {
+    const employees = await this.listEmployeesRepository.list(id);
     return employees;
   }
 }

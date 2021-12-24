@@ -7,7 +7,8 @@ export class ListEmployeesController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const employees = await this.listEmployees.list();
+      const { id } = httpRequest.query;
+      const employees = await this.listEmployees.list(id);
       return ok(employees);
     } catch (error) {
       return serverError(error);

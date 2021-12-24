@@ -30,12 +30,15 @@ export class PgEmployeesRepository
     employee.name = name;
     await this.repository.save(employee);
   }
-  async list(): Promise<ListEmployeesRepository.Result> {
+  async list(id?: string): Promise<ListEmployeesRepository.Result> {
     const listQuery = this.repository
       .createQueryBuilder('e')
       .select(['e.id', 'e.name'])
       .innerJoin('e.branch', 'branch')
       .addSelect('branch.name');
+    if (id) {
+      listQuery.andWhere('e.id = :id', { id });
+    }
     const employees = await listQuery.getMany();
     return employees;
   }

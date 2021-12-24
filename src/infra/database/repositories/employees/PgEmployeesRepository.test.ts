@@ -52,5 +52,17 @@ describe('PgEmployeesRepository', () => {
       expect(employee).toHaveProperty('name');
       expect(employee).toHaveProperty('branch');
     });
+    it('Should return a list of employees', async () => {
+      const newBranch = await pgBranchRepo.save({
+        name: faker.company.companyName(),
+      });
+      const employee = {
+        name: faker.name.firstName(),
+        branch_id: newBranch.id,
+      };
+      const newEmployee = await pgEmployeeRepo.save(employee);
+      const [employees] = await sut.list(newEmployee.id);
+      expect(employees.id).toEqual(newEmployee.id);
+    });
   });
 });
