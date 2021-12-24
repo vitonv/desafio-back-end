@@ -19,8 +19,8 @@ export class PgBranch {
   @Column()
   name: string;
 
-  // @OneToMany(() => PgEmployee, employee => employee.branch_id)
-  // employees: PgEmployee[];
+  @OneToMany(() => PgEmployee, employee => employee.branch)
+  employees: PgEmployee[];
 
   @CreateDateColumn()
   created_at: Date;

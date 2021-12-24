@@ -42,4 +42,14 @@ describe('PgBranchesRepository', () => {
       expect(findBranch.name).toBe(newName);
     });
   });
+  describe('list()', () => {
+    it('Should list a branch with number of employees', async () => {
+      const name = faker.company.companyName();
+      const newBranch = await pgBranchRepo.save({
+        name,
+      });
+      const [branch] = await sut.list(null, name);
+      expect(branch).toHaveProperty('employees');
+    });
+  });
 });

@@ -24,7 +24,8 @@ export class PgBranchesRepository
   async list(id?: string, name?: string): Promise<ListBranches.Result> {
     const listQuery = this.repository
       .createQueryBuilder('branch')
-      .select(['branch.id', 'branch.name']);
+      .select(['branch.id', 'branch.name'])
+      .loadRelationCountAndMap('branch.employees', 'branch.employees');
     if (id) {
       listQuery.andWhere('branch.id = :id', { id });
     }
