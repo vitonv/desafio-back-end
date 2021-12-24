@@ -1,5 +1,7 @@
 import { AuthenticationController } from '.';
 import { Authentication } from '../../../../domain/useCases/user/Login';
+import { InvalidCredentials } from '../../../errors';
+import { badRequest } from '../../../helpers/http/HttpHelper';
 
 const makeAuthentication = () => {
   class AuthenticationSpy implements Authentication {
@@ -37,5 +39,30 @@ describe('Authentication Controller', () => {
       email: 'any_mail@mail.com',
       password: 'any_password',
     });
+  });
+  it('Should return 400 if authentication returns falsy', async () => {
+    const { sut, authenticationSpy } = makeSut();
+    jest
+      .spyOn(authenticationSpy, 'auth')
+      .mockReturnValueOnce(Promise.resolve(null));
+    const response = await sut.handle(makeFakeRequest());
+    expect(response).toEqual(badRequest(new InvalidCredentials()));
+  });
+  it('Should return 500 if authenticationthrows', async () => {
+    const { sut, authenticationSpy } = makeSut();
+    jest
+      .spyOn(authenticationSpy, 'auth')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const response = await sut.handle(makeFakeRequest());
+    expect(response.statusCode).toBe(500);
+  });
+  it('Should return 200 on success', async () => {
+    const { sut } = makeSut();
+
+    const response = await sut.handle(makeFakeRequest());
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toBeTruthy();
+    expect(response.body).toHaveProperty('accessToken');
+    expect(response.body).toHaveProperty('name');
   });
 });
