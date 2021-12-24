@@ -1,6 +1,7 @@
 import { CreateBranchController } from '.';
 import { CreateBranch } from '../../../../domain/useCases/branches/CreateBranch';
-import { serverError } from '../../../helpers/http/HttpHelper';
+import { BranchAlreadyExists } from '../../../errors/BranchAlreadyExists';
+import { badRequest, serverError } from '../../../helpers/http/HttpHelper';
 
 const makeCreateBranch = () => {
   class CreateBranchSpy implements CreateBranch {
@@ -30,6 +31,14 @@ describe('CreateBranch Controller', () => {
     const createSpy = jest.spyOn(createBranchSpy, 'create');
     await sut.handle(makeFakeRequest());
     expect(createSpy).toHaveBeenCalledWith(makeFakeRequest().body.name);
+  });
+  it('Should return 400 if createBranch returns false', async () => {
+    const { sut, createBranchSpy } = makeSut();
+    jest
+      .spyOn(createBranchSpy, 'create')
+      .mockReturnValueOnce(Promise.resolve(false));
+    const httpResponse = await sut.handle(makeFakeRequest());
+    expect(httpResponse).toEqual(badRequest(new BranchAlreadyExists()));
   });
   it('Should return 500 if createBranch throws', async () => {
     const { sut, createBranchSpy } = makeSut();
