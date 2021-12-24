@@ -1,4 +1,5 @@
 import { CreateEmployee } from '../../../../domain/useCases/employees/CreateEmployee';
+import { BranchDoesNotExists } from '../../../errors/BranchDoesNotExists';
 import { badRequest, created } from '../../../helpers/http/HttpHelper';
 import { Controller, HttpRequest, HttpResponse } from '../../../protocols';
 
@@ -13,6 +14,6 @@ export class CreateEmployeeController implements Controller {
     if (response) {
       return created(true);
     }
-    return badRequest(new Error('Branch does not exists!'));
+    return badRequest(new BranchDoesNotExists());
   }
 }

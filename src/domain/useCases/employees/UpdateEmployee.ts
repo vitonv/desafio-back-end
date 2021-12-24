@@ -4,6 +4,7 @@ export interface UpdateEmployee {
 
 export namespace UpdateEmployee {
   export type Params = {
+    id: string;
     name: string;
     branch_name: string;
   };

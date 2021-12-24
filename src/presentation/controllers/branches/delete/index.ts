@@ -1,4 +1,5 @@
 import { DeleteBranch } from '../../../../domain/useCases/branches/DeleteBranch';
+import { BranchDoesNotExists } from '../../../errors/BranchDoesNotExists';
 import {
   badRequest,
   noContent,
@@ -13,7 +14,7 @@ export class DeleteBranchController implements Controller {
       const { id } = httpRequest.params;
       const response = await this.deleteBranch.delete(id);
       if (!response) {
-        return badRequest(new Error('This branch does not exists'));
+        return badRequest(new BranchDoesNotExists());
       }
       return noContent();
     } catch (error) {

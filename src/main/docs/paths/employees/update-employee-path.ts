@@ -7,6 +7,17 @@ export const updateEmployeePath = {
         apiKeyAuth: [],
       },
     ],
+    parameters: [
+      {
+        in: 'path',
+        name: 'id',
+        schema: {
+          type: 'string',
+        },
+        required: true,
+        description: 'ID of the employee to be updated',
+      },
+    ],
     requestBody: {
       content: {
         'application/json': {
@@ -17,8 +28,8 @@ export const updateEmployeePath = {
       },
     },
     responses: {
-      201: {
-        description: 'Success',
+      204: {
+        $ref: '#/components/noContent',
       },
       400: {
         $ref: '#/components/badRequest',

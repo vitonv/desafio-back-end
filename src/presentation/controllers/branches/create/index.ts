@@ -1,4 +1,5 @@
 import { CreateBranch } from '../../../../domain/useCases/branches/CreateBranch';
+import { BranchAlreadyExists } from '../../../errors/BranchAlreadyExists';
 import {
   badRequest,
   created,
@@ -13,7 +14,7 @@ export class CreateBranchController implements Controller {
       const { name } = httpRequest.body;
       const response = await this.createBranch.create(name);
       if (!response) {
-        return badRequest(new Error('Name already exists'));
+        return badRequest(new BranchAlreadyExists());
       }
       return created(true);
     } catch (error) {
