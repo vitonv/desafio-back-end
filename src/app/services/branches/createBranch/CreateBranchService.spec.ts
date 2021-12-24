@@ -1,4 +1,5 @@
 import { CreateBranchService } from '.';
+import { Branch } from '../../../../domain/entities/Branch';
 import { ListBranches } from '../../../../domain/useCases/branches/ListBranches';
 import { CreateBranchRepository } from '../../../contracts/db/branches/CreateBranch';
 import { ListBranchesRepository } from '../../../contracts/db/branches/ListBranches';
@@ -29,6 +30,34 @@ const makeSut = () => {
   return { sut, createBranchRepositorySpy, listBranchRepositorySpy };
 };
 describe('CreateBranch Service', () => {
+  it('Should call ListBranchRepository with correct values', async () => {
+    const { sut, listBranchRepositorySpy } = makeSut();
+    const listSpy = jest.spyOn(listBranchRepositorySpy, 'list');
+    await sut.create('any_name');
+    expect(listSpy).toHaveBeenCalledWith(null, 'any_name');
+  });
+  it('Should throw if ListBranchRepository throws', async () => {
+    const { sut, listBranchRepositorySpy } = makeSut();
+    jest
+      .spyOn(listBranchRepositorySpy, 'list')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const error = sut.create('any_name');
+    await expect(error).rejects.toThrow();
+  });
+  it('Should throw if ListBranchRepository throws', async () => {
+    const { sut, listBranchRepositorySpy } = makeSut();
+    jest.spyOn(listBranchRepositorySpy, 'list').mockReturnValueOnce(
+      Promise.resolve([
+        {
+          id: 'any_id',
+          name: 'any_name',
+          employees: 10,
+        },
+      ]),
+    );
+    const result = await sut.create('any_name');
+    expect(result).toBe(false);
+  });
   it('Should call CreateBranchRepository with correct values', async () => {
     const { sut, createBranchRepositorySpy } = makeSut();
     const createSpy = jest.spyOn(createBranchRepositorySpy, 'create');
