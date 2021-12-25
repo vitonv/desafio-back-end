@@ -1,11 +1,10 @@
-
-   
 {
   "compilerOptions": {
     "target": "ESNext",
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
+    // "baseUrl": "src",
     "strict": false,
     "strictPropertyInitialization": false,
     "allowJs": false,
@@ -13,9 +12,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
-    // "typeRoots": [
-    //   "./src/main/config/@types",
-    //   "./node_modules/@types"
-    // ]
+    "typeRoots": [
+      "./src/main/config/@types",
+      "./node_modules/@types"
+    ]
   }
 }

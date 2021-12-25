@@ -10,6 +10,7 @@
     "test:unit": "yarn test --watch --verbose -c jest-unit-config.js",
     "test:integration": "yarn test --watch -c jest-integration-config.js",
     "test:ci": "yarn test --coverage",
+    "build": "tsc",
     "start":" node ./dist/main/server.js",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/main/server.ts"
   },
