@@ -26,18 +26,18 @@ describe('PgEmployeesRepository', () => {
     sut = new PgEmployeesRepository();
   });
 
-  // describe('create()', () => {
-  //   it('Should create a new employee ', async () => {
-  //     const newBranch = await pgBranchRepo.save({
-  //       name: faker.company.companyName(),
-  //     });
-  //     const employee = {
-  //       name: faker.name.firstName(),
-  //       branch_id: newBranch.id,
-  //     };
-  //     await sut.create(employee);
-  //   });
-  // });
+  describe('create()', () => {
+    it('Should create a new employee ', async () => {
+      const newBranch = await pgBranchRepo.save({
+        name: faker.company.companyName(),
+      });
+      const employee = {
+        name: faker.name.firstName(),
+        branch_id: newBranch.id,
+      };
+      await sut.create(employee);
+    });
+  });
   describe('list()', () => {
     type EmployeeData = {
       id: string;
@@ -47,7 +47,7 @@ describe('PgEmployeesRepository', () => {
       };
     };
     it('Should return a list of employees', async () => {
-      const [employee] = await sut.list();
+      const [employee] = await sut.list(null, null);
       expect(employee).toHaveProperty('id');
       expect(employee).toHaveProperty('name');
       expect(employee).toHaveProperty('branch');
