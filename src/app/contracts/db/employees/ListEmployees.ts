@@ -2,7 +2,10 @@ import { Employee } from '../../../../domain/entities/Employee';
 import { ListEmployees } from '../../../../domain/useCases/employees/ListEmployees';
 
 export interface ListEmployeesRepository {
-  list(name?: string): Promise<ListEmployeesRepository.Result>;
+  list(
+    id?: string,
+    branch_id?: string,
+  ): Promise<ListEmployeesRepository.Result>;
 }
 
 export namespace ListEmployeesRepository {

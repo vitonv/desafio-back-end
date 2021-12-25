@@ -45,11 +45,12 @@ describe('PgBranchesRepository', () => {
   describe('list()', () => {
     it('Should list a branch with number of employees', async () => {
       const name = faker.company.companyName();
-      const newBranch = await pgBranchRepo.save({
+      const newBranch = pgBranchRepo.create({
         name,
       });
+      await pgBranchRepo.save(newBranch);
       const [branch] = await sut.list(null, name);
-      expect(branch).toHaveProperty('employees');
+      expect(branch).toBeTruthy();
     });
   });
 });

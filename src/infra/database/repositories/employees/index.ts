@@ -20,6 +20,7 @@ export class PgEmployeesRepository
   ) {
     this.repository = this.connection.getRepository(PgEmployee);
   }
+
   async delete(id: string): Promise<void> {
     await this.repository.delete({ id });
   }
@@ -30,14 +31,20 @@ export class PgEmployeesRepository
     employee.name = name;
     await this.repository.save(employee);
   }
-  async list(id?: string): Promise<ListEmployeesRepository.Result> {
+  async list(
+    id?: string,
+    branch_id?: string,
+  ): Promise<ListEmployeesRepository.Result> {
     const listQuery = this.repository
       .createQueryBuilder('e')
       .select(['e.id', 'e.name'])
       .innerJoin('e.branch', 'branch')
-      .addSelect('branch.name');
+      .addSelect(['branch.id', 'branch.name']);
     if (id) {
       listQuery.andWhere('e.id = :id', { id });
+    }
+    if (branch_id) {
+      listQuery.andWhere('branch.id = :branch_id', { branch_id });
     }
     const employees = await listQuery.getMany();
     return employees;

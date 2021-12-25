@@ -19,24 +19,31 @@ const makeSut = () => {
     listEmployeesSpy,
   };
 };
+const makeFakeRequest = () => ({
+  query: {
+    id: 'any_id',
+    branch_id: 'branch_id',
+  },
+});
+
 describe('ListEmployee Controller', () => {
   it('Should call listEmployees with correct values', async () => {
     const { sut, listEmployeesSpy } = makeSut();
     const listSpy = jest.spyOn(listEmployeesSpy, 'list');
-    await sut.handle(null);
-    expect(listSpy).toHaveBeenCalled();
+    await sut.handle(makeFakeRequest());
+    expect(listSpy).toHaveBeenCalledWith('any_id', 'branch_id');
   });
   it('Should return 500 if listEmployees throws', async () => {
     const { sut, listEmployeesSpy } = makeSut();
     jest
       .spyOn(listEmployeesSpy, 'list')
       .mockReturnValueOnce(Promise.reject(new Error()));
-    const response = await sut.handle(null);
+    const response = await sut.handle(makeFakeRequest());
     expect(response).toEqual(serverError(new Error()));
   });
   it('Should return 200 on success', async () => {
     const { sut } = makeSut();
-    const response = await sut.handle(null);
+    const response = await sut.handle(makeFakeRequest());
     expect(response.statusCode).toBe(200);
   });
 });

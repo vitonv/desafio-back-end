@@ -17,6 +17,15 @@ export const listEmployeePath = {
         required: false,
         description: 'Filter to find employee by ID',
       },
+      {
+        in: 'query',
+        name: 'branch_id',
+        schema: {
+          type: 'string',
+        },
+        required: false,
+        description: 'Filter to list employees by branch',
+      },
     ],
     responses: {
       200: {
