@@ -1,7 +1,7 @@
 export const updateEmployeePath = {
   patch: {
     tags: ['Employees'],
-    summary: 'API para cadastrar um(a) funcionário(a)',
+    summary: 'API para atualizar um(a) funcionário(a)',
     security: [
       {
         apiKeyAuth: [],

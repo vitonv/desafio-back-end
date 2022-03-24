@@ -7,9 +7,9 @@ import { updateBranchRoute } from './update';
 
 const branchRoutes = Router();
 
-branchRoutes.use('/add', createBranchRoute);
-branchRoutes.use('/update', updateBranchRoute);
-branchRoutes.use('/delete', deleteBranchRoute);
-branchRoutes.use('/list', listBranchesRoute);
+branchRoutes.use(createBranchRoute);
+branchRoutes.use(updateBranchRoute);
+branchRoutes.use(deleteBranchRoute);
+branchRoutes.use(listBranchesRoute);
 
 export { branchRoutes };

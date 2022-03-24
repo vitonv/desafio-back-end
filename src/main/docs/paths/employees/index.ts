@@ -4,8 +4,6 @@ import { listEmployeePath } from './list-employees-path';
 import { updateEmployeePath } from './update-employee-path';
 
 export default {
-  '/employees/add': createEmployeePath,
-  '/employees/list': listEmployeePath,
-  '/employees/update/{id}': updateEmployeePath,
-  '/employees/delete/{id}': deleteEmployeePath,
+  '/employees': {...createEmployeePath,...listEmployeePath},
+  '/employees/{id}': {...updateEmployeePath,...deleteEmployeePath}
 };

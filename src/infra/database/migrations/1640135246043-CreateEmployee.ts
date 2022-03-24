@@ -16,6 +16,7 @@ export class CreateEmployee1640135246043 implements MigrationInterface {
           {
             name: 'name',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'created_at',

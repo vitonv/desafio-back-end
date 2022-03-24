@@ -4,8 +4,6 @@ import { listBranchPath } from './list-branch';
 import { updateBranchPath } from './update-branch';
 
 export default {
-  '/branches/add': createBranchPath,
-  '/branches/list': listBranchPath,
-  '/branches/update/{id}': updateBranchPath,
-  '/branches/delete/{id}': deleteBranchPath,
+  '/branches': {...listBranchPath,...createBranchPath},
+  '/branches/{id}': {...updateBranchPath,...deleteBranchPath}
 };

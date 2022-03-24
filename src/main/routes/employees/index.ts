@@ -7,9 +7,9 @@ import { updateEmployeeRoute } from './update';
 
 const employeeRoutes = Router();
 
-employeeRoutes.use('/add', createEmployeeRoute);
-employeeRoutes.use('/list', listEmployeesRoute);
-employeeRoutes.use('/update', updateEmployeeRoute);
-employeeRoutes.use('/delete', deleteEmployeeRoute);
+employeeRoutes.use(createEmployeeRoute);
+employeeRoutes.use(listEmployeesRoute);
+employeeRoutes.use(updateEmployeeRoute);
+employeeRoutes.use(deleteEmployeeRoute);
 
 export { employeeRoutes };
