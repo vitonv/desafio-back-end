@@ -17,7 +17,7 @@ module.exports = [{
     }
   },
   entities: ["./dist/infra/database/entities/**/*.js"],
-  migrations: ["./src/infra/database/migrations/*.ts"],
+  migrations: ["./dist/infra/database/migrations/*.js"],
   cli: {
     migrationsDir: "./src/infra/database/migrations",
   },
